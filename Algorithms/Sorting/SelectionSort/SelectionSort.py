@@ -2,6 +2,7 @@ def selectionSort(arr):
     '''''
     selection sort, selects the smallest element in the array and places it at the starting of the array.
     index 'j' will search for smallest element and places it at the index 'i' and 'i' slides through
+    https://www.geeksforgeeks.org/selection-sort/
     '''''
     length = len(arr)
     i = 0
