@@ -1,5 +1,5 @@
 from collections import OrderedDict
-
+import math
 graph1 = OrderedDict()
 
 graph1[1] =[2,4]
@@ -24,16 +24,30 @@ graph3[3] = [4]
 graph3[4] = []
 
 time = 0
+smallestCycleTime = -math.inf
+startTime = 0
 
-def depthFirstTraversal(graph,node,bookKeepingDict,flag):
+def depthFirstTraversal(graph,node,searchNode,cycleNodeflag,bookKeepingDict,startFlag):
     global time
+    global startTime
+    global smallestCycleTime
+    if node == searchNode:
+        if cycleNodeflag :
+            newTime = time - startTime
+            if newTime < smallestCycleTime:
+                smallestCycleTime = newTime
+            startTime = 0
+            time = 0
+        else:
+            cycleNodeflag = True
+            startTime = time
     if node in bookKeepingDict:
         if bookKeepingDict[node]["seen"]:
             return ;
         else:
             bookKeepingDict[node]["seen"] = True
-    time+=1
-    if(flag):
+
+    if (startFlag):
         flag = False
         bookKeepingDict[node] = {}
         bookKeepingDict[node]["parent"] = None
@@ -43,10 +57,7 @@ def depthFirstTraversal(graph,node,bookKeepingDict,flag):
         if not adjNode in bookKeepingDict:
             bookKeepingDict[adjNode] = {}
             bookKeepingDict[adjNode]["seen"] = False
-            bookKeepingDict[adjNode]["parent"] = node
             bookKeepingDict = depthFirstTraversal(graph,adjNode,bookKeepingDict,flag)
-    time+=1
-    bookKeepingDict[node][" mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmfinishTime"] = time
     return bookKeepingDict
 
 
@@ -54,4 +65,4 @@ bookKeepingDict = {}
 time = 0
 node = 1
 flag = True
-print(depthFirstTraversal(graph3,node,bookKeepingDict,flag))
+print(depthFirstTraversal(graph3,node,searchNode,cycleNodeflag,bookKeepingDict,startFlag))
